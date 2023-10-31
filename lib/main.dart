@@ -9,6 +9,11 @@ void main() {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                'assets/ma.jpg',
+                height: 250,
+                width: 250,
+              ),
               Text(
                 "Mustafa Atmaca",
                 style: TextStyle(fontSize: 35, color: Colors.white),
