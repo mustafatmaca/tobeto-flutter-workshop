@@ -21,21 +21,25 @@ class _QuestionState extends State<QuestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(questions[questionNumber].question),
-            ...questions[questionNumber].answers.map((answer) {
-              return ElevatedButton(
-                onPressed: () {
-                  if (questionNumber < 3) {
-                    changeQuestion();
-                  }
-                },
-                child: Text(answer),
-              );
-            })
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(questions[questionNumber].question),
+              ...questions[questionNumber].answers.map((answer) {
+                return ElevatedButton(
+                  onPressed: () {
+                    if (questionNumber < 3) {
+                      changeQuestion();
+                    }
+                  },
+                  child: Text(answer),
+                );
+              })
+            ],
+          ),
         ),
       ),
     );
