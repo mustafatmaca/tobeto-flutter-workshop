@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intro/data/questions.dart';
+import 'package:intro/result_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({Key? key}) : super(key: key);
@@ -10,6 +11,8 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionState extends State<QuestionScreen> {
   int questionNumber = 0;
+  int questionsLength = questions.length;
+  List<int> answersIndex = [];
 
   void changeQuestion() {
     setState(() {
@@ -17,12 +20,26 @@ class _QuestionState extends State<QuestionScreen> {
     });
   }
 
+  void saveAnswer(int index) {
+    answersIndex.add(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          "${questionNumber + 1}/$questionsLength",
+          style: const TextStyle(color: Colors.blueAccent),
+        ),
+      ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,8 +48,18 @@ class _QuestionState extends State<QuestionScreen> {
               ...questions[questionNumber].answers.map((answer) {
                 return ElevatedButton(
                   onPressed: () {
-                    if (questionNumber < 3) {
+                    if (questionNumber < questionsLength - 1) {
+                      saveAnswer(
+                          questions[questionNumber].answers.indexOf(answer));
                       changeQuestion();
+                    } else if (questionNumber == questionsLength - 1) {
+                      saveAnswer(
+                          questions[questionNumber].answers.indexOf(answer));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResultScreen(answersIndex)),
+                      );
                     }
                   },
                   child: Text(answer),
