@@ -38,41 +38,47 @@ class ResultScreen extends StatelessWidget {
             style: TextStyle(color: Colors.blueAccent),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  ...questions.map((q) {
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: questions.length,
+                  itemBuilder: (context, index) {
+                    final item = questions[index];
+
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(q.question),
-                        ...q.answers.map((a) {
+                        Text(item.question),
+                        ...item.answers.map((a) {
                           return ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: q.answers.indexOf(a) ==
-                                        q.answerIndex
-                                    ? Colors.green
-                                    : q.answers.indexOf(a) ==
-                                            answersIndex[questions.indexOf(q)]
-                                        ? Colors.red
-                                        : Colors.blueAccent,
+                                backgroundColor:
+                                    item.answers.indexOf(a) == item.answerIndex
+                                        ? Colors.green
+                                        : item.answers.indexOf(a) ==
+                                                answersIndex[
+                                                    questions.indexOf(item)]
+                                            ? Colors.red
+                                            : Colors.blueAccent,
                               ),
                               child: Text(a));
                         }),
-                        const SizedBox(
-                          height: 26,
-                        ),
+                        SizedBox(
+                          height: 20,
+                        )
                       ],
                     );
-                  })
-                ],
+                  },
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
